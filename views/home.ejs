@@ -1,0 +1,87 @@
+<%- include("partials/header") %>
+
+<header>
+  <!-- Navbar -->
+  <nav
+    class="navbar navbar-expand-lg navbar-light row justify-content-around"
+    style="height: 150px"
+  >
+    <div class="container-fluid row">
+      <!--<a class="navbar-brand" href="#">Navbar</a> -->
+      <img
+        class="navbar-brand col-4"
+        src="rmc.png"
+        aria="RMC logo"
+        href="#"
+        style="width: 25rem; height: 10rem; object-fit: cover; margin-left: 10%"
+      />
+      <button
+        class="navbar-toggler collapsed"
+        style="position: fixed; top: 0; right: inherit"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        id="navbarNavAltMarkup"
+        class="navbar-collapse col-4 justify-content-end collapse"
+        style="padding-right: 15%"
+      >
+        <div class="navbar-nav" style="font-size: 25px">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="#"
+            style="color: rgb(81, 129, 231)"
+            >Home</a
+          >
+          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar -->
+</header>
+<!-- Background image -->
+<div
+  class="container-fluid"
+  style="
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+      url(bg.jpg);
+    background-repeat: no-repeat;
+    height: 90%;
+    background-position: center;
+    background-size: cover;
+  "
+>
+  <section class="landing">
+    <div class="group">
+      <h1 class="message">Explore.</h1>
+      <h1 class="message">Rate.</h1>
+      <h1 class="message">Review.</h1>
+    </div>
+    <div>
+      <p>
+        Got questions about your upcoming classes? Not knowing what to expect?
+        <strong>Look up the class to learn more!</strong>
+      </p>
+    </div>
+    <div class="input-group">
+      <input
+        class="form-control py-2 rounded-pill mr-1 pr-5"
+        type="search"
+        placeholder="Class Name..."
+        id="searchbar"
+      />
+    </div>
+  </section>
+</div>
+<!-- Background Image-->
+
+<%- include("partials/footer") %>
