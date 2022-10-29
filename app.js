@@ -11,9 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static("assets"));
 app.use(express.static("styles"));
-//mongodb://mongo:27017/docker-node-mongo
 mongoose
-  .connect("mongodb://localhost:27017/docker-node-mongo", {
+  .connect("mongodb://localhost:27017/classes", {
     useNewUrlParser: true,
   })
   .then(() => console.log("MongoDB Connected"))
@@ -47,8 +46,6 @@ got("https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP", {
   json: true,
 })
   .then((response) => {
-    //console.log(response.body[0].COURSES[0].name);
-    //console.log(response.body[0].COURSES.length);
     for (let i = 0; i < response.body[0].COURSES.length; i++) {
       let newCourse = {
         course_id: response.body[0].COURSES[i].code,
