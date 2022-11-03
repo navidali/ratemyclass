@@ -1,0 +1,28 @@
+<%- include("partials/header") -%> 
+
+<body>
+    <div>
+        <h1>Rate and Review</h1>
+        <p style="color: black;"> Class id: <%= course.id %> Course Name: <%= course.name %></p>
+    </div>    
+
+    <div>
+      <form class="ui form" action="<%= '/'+course.name %>" method="POST">
+        <p style="color:black;">How would you rate this class? (between 1 and 5)</p>
+        <div class="field">
+          <input type="number" name="rating" min="1" max="5" required>
+        </div>
+        <p style="color:black"> Why did you give this rating?</p>
+        <div class="field">
+          <input type="text" name="description" required>
+        </div>
+        <a href="<%= '/'+course.name %>" class="ui button">Back</a>
+        <button class="ui button" type="submit">Submit</button>
+      </form>
+    </div>
+
+
+
+</body>
+
+<%- include("partials/footer") -%> 

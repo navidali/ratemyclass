@@ -1,6 +1,7 @@
 const methodOverride = require("method-override"),
   bodyParser = require("body-parser"),
   Course = require("./models/courses.js"),
+  Review = require("./models/reviews.js"),
   mongoose = require("mongoose"),
   express = require("express"),
   got = require("got"),
@@ -20,16 +21,39 @@ mongoose
 
 ufcourses = [];
 
-async function init_course_db() {
+function init() {
+  if (ufcourses == 0) {
+    got("https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP", {
+      json: true,
+    })
+      .then((response) => {
+        for (let i = 0; i < response.body[0].COURSES.length; i++) {
+          let newCourse = {
+            id: response.body[0].COURSES[i].code,
+            name: response.body[0].COURSES[i].name,
+            description: response.body[0].COURSES[i].description,
+            prerequisites: response.body[0].COURSES[i].prerequisites,
+          };
+          ufcourses.push(newCourse);
+        }
+        init_course_db();
+      })
+      .catch((error) => {
+        console.log(error.response.body);
+      });
+  }
+}
+
+function init_course_db() {
   Course.find({}, (err, courses) => {
     if (err) console.log(err);
     if (courses.length == 0) {
       for (let i = 0; i < ufcourses.length; i++) {
         const newCourse = {
-          course_id: ufcourses[i].course_id,
-          course_name: ufcourses[i].course_name,
-          course_desc: ufcourses[i].course_desc,
-          course_prereq: ufcourses[i].course_prereq,
+          id: ufcourses[i].id,
+          name: ufcourses[i].name,
+          description: ufcourses[i].description,
+          prerequisites: ufcourses[i].prerequisites,
         };
         Course.create(newCourse, (err, course) => {
           if (err) {
@@ -42,27 +66,58 @@ async function init_course_db() {
   });
 }
 
-got("https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP", {
-  json: true,
-})
-  .then((response) => {
-    for (let i = 0; i < response.body[0].COURSES.length; i++) {
-      let newCourse = {
-        course_id: response.body[0].COURSES[i].code,
-        course_name: response.body[0].COURSES[i].name,
-        course_desc: response.body[0].COURSES[i].description,
-        course_prereq: response.body[0].COURSES[i].prerequisites,
-      };
-      ufcourses.push(newCourse);
-    }
-    init_course_db();
-  })
-  .catch((error) => {
-    console.log(error.response.body);
-  });
+init();
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", { courses: ufcourses });
+});
+
+app.get("/:courseId", (req, res) => {
+  console.log(req.params.courseId);
+  Course.find({ name: req.params.courseId }, function (err, course) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("view", { course: course[0] });
+    }
+  });
+});
+
+app.post("/:courseId", (req, res) => {
+  const course_name = req.params.courseId,
+    rating = req.body.rating,
+    description = req.body.description;
+
+  const newReview = {
+    course_name: course_name,
+    rating: rating,
+    description: description,
+  };
+
+  Review.create(newReview, (err, review) => {
+    if (err) {
+      console.log(err);
+      res.render("new", { course: course });
+    } else {
+      Course.find({ name: req.params.courseId }, function (err, course) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("view", { course: course[0], review: review });
+        }
+      });
+    }
+  });
+});
+
+app.get("/:courseId/new", (req, res) => {
+  Course.find({ name: req.params.courseId }, function (err, course) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("new", { course: course[0] });
+    }
+  });
 });
 
 app.get("*", (req, res) => {

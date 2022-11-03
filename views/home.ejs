@@ -7,7 +7,6 @@
     style="height: 150px"
   >
     <div class="container-fluid row">
-      <!--<a class="navbar-brand" href="#">Navbar</a> -->
       <img
         class="navbar-brand col-4"
         src="rmc.png"
@@ -73,12 +72,24 @@
       </p>
     </div>
     <div class="input-group">
-      <input
-        class="form-control py-2 rounded-pill mr-1 pr-5"
-        type="search"
-        placeholder="Class Name..."
-        id="searchbar"
-      />
+      <form class="form-inline my-2 my-lg-0" action="/class/" method="get"></form>
+        <input
+          class="form-control py-2 rounded-pill mr-1 pr-5"
+          type="text"
+          name="search"
+          placeholder="Class Name..."
+          id="searchbar"
+        />
+      </form>
+    </div>
+    <div>
+      <table id="courselist">
+      <% for(var i = 0; i < courses.length; i++) {%>
+        <tr>
+          <td><a href="<%= '/'+courses[i].name %>"><%= courses[i].name %></a></td>
+        </tr>
+        <% }; %>
+      </table>
     </div>
   </section>
 </div>

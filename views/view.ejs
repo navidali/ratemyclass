@@ -1,0 +1,22 @@
+<%- include("partials/header") -%> 
+
+<body>
+    <div class="course">
+        <h1><%='ID: '+ course.id %> Course Name <%=course.name%></h1>
+        <p style="color: black;">Description: <%=course.description %></p>
+        <p style="color: black;">Prereq: <%=course.prerequisites %></p>
+    </div>    
+
+    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></div>
+        <div class="card-body">
+          <h5 class="card-title">Somebody's name</h5>
+          <p class="card-text">A little review here.</p>
+        </div>
+      </div>
+      <div>
+        <button><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+      </div>
+</body>
+
+<%- include("partials/footer") -%> 

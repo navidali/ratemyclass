@@ -1,9 +1,9 @@
 var mongoose = require("mongoose");
 
 var courseSchema = new mongoose.Schema({
-  course_id: String,
-  course_name: String,
-  course_desc: String,
-  course_prereq: String,
+  id: String,
+  name: String,
+  description: String,
+  prerequisites: String,
 });
 module.exports = mongoose.model("Course", courseSchema);
