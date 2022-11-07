@@ -21,11 +21,14 @@ mongoose
 
 ufcourses = [];
 
-function init() {
+async function init() {
   if (ufcourses == 0) {
-    got("https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP", {
-      json: true,
-    })
+    await got(
+      "https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP",
+      {
+        json: true,
+      }
+    )
       .then((response) => {
         for (let i = 0; i < response.body[0].COURSES.length; i++) {
           let newCourse = {
@@ -78,7 +81,14 @@ app.get("/:courseId", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render("view", { course: course[0] });
+      Review.find({ course_name: req.params.courseId }, function (err, review) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(review);
+          res.render("view", { course: course[0], review: review });
+        }
+      });
     }
   });
 });

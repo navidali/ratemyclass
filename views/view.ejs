@@ -1,22 +1,59 @@
 <%- include("partials/header") -%> 
 
 <body>
-    <div class="course">
-        <h1><%='ID: '+ course.id %> Course Name <%=course.name%></h1>
-        <p style="color: black;">Description: <%=course.description %></p>
-        <p style="color: black;">Prereq: <%=course.prerequisites %></p>
-    </div>    
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold"><%=course.id + ': ' + course.name %></h1>
+      <p class="col-md-8 fs-4"><%='Description: '+ course.description %></p>
+      <p class="col-md-8 fs-4"><%='prerequisites: '+ course.prerequisites %></p>
+      <button class="btn btn-primary btn-lg" type="button">Example button</button>
+    </div>
+  </div> 
 
-    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-header"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></div>
-        <div class="card-body">
-          <h5 class="card-title">Somebody's name</h5>
-          <p class="card-text">A little review here.</p>
+<div id="myCarousel" class="carousel slide container" data-bs-ride="carousel">
+  <div class="carousel-inner w-100">
+    <% for (var i = 0; i < review.length; i++) { %>
+      <% if (i == 0) { %>
+    <div class="carousel-item active">
+    <% } else { %>
+      <div class="carousel-item">
+    <% } %>
+      <div class="col-md-4">
+        <div class="card card-body" style="height: 100%";>
+          <p><%= review[i].description %></p>
         </div>
       </div>
-      <div>
-        <button><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+    </div>
+    <% } %>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+  
+  
+  
+  
+
+
+
+
+
+  <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></div>
+      <div class="card-body">
+        <h5 class="card-title">Somebody's name</h5>
+        <p class="card-text">A little review here.</p>
       </div>
+    </div>
+    <div>
+      <button><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+    </div>
 </body>
 
 <%- include("partials/footer") -%> 
