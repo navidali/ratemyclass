@@ -10,50 +10,69 @@
     </div>
   </div> 
 
-<div id="myCarousel" class="carousel slide container" data-bs-ride="carousel">
-  <div class="carousel-inner w-100">
-    <% for (var i = 0; i < review.length; i++) { %>
-      <% if (i == 0) { %>
-    <div class="carousel-item active">
-    <% } else { %>
-      <div class="carousel-item">
-    <% } %>
-      <div class="col-md-4">
-        <div class="card card-body" style="height: 100%";>
-          <p><%= review[i].description %></p>
+  <% if (review.length != 0) { %>
+    <div class="pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 text-right">
+            <button class="control btn btn-primary carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span>Previous</span>
+            </button>
+            <button class="control btn btn-primary carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span>Next</span>
+            </button>
+          </div>
+          <div class="col-12">
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <% for (var i = 0; i < review.length; i++) { %>
+                  <% if (i == 0) { %>
+                <div class="carousel-item active">
+                  <div class="row">
+                  <% } else if (i != 0 && i % 3 === 0){ %>
+                <div class="carousel-item">
+                  <div class="row">
+                  <% }%>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                          <div class="card-header">
+                            <% for (var j = 1; j <= 5; j++) { %>
+                              <% if (j <= review[i].rating) { %>
+                                <i class="yellow fas fa-star"></i> 
+                              <% } else { %>
+                                <i class="fas fa-star"></i>
+                              <% } %>
+                            <% } %> 
+                          </div>
+                          <div class="card-body">
+                            <h4 class="card-title"><%= review[i].description %></h4>
+                            <p class="card-text"><%= "Last updated " + Math.round((Date.now() - review[i].date) / (1000 * 3600 * 24)) + " days ago" %></p>
+                          </div>
+                        </div>
+                    </div>
+                  <% if ((i + 1) == review.length || (i + 1) % 3 === 0) { %>
+                    </div>
+                  </div>
+                  <% } %>
+                <% } %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <% } %>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
-  
-  
-  
-  
-
-
-
-
-
-  <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header"><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></div>
-      <div class="card-body">
-        <h5 class="card-title">Somebody's name</h5>
-        <p class="card-text">A little review here.</p>
-      </div>
-    </div>
+<div>
+  <button type="button" class="btn btn-secondary btn-lg"><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+</div>
+  <% } else { %>
     <div>
-      <button><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+      <h1>There aren't any reviews for this class yet!</h1>
+      <p>Be the first to make a post!</p>
+      <button type="button" class="btn btn-secondary btn-lg"><a href="<%= '/'+course.name %>/new">Add Review</a></button>
     </div>
+  <% } %>    
 </body>
 
 <%- include("partials/footer") -%> 
