@@ -19,51 +19,31 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-ufcourses = [];
-
-async function init() {
-  if (ufcourses == 0) {
-    await got(
-      "https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP",
-      {
-        json: true,
-      }
-    )
-      .then((response) => {
-        for (let i = 0; i < response.body[0].COURSES.length; i++) {
-          let newCourse = {
-            id: response.body[0].COURSES[i].code,
-            name: response.body[0].COURSES[i].name,
-            description: response.body[0].COURSES[i].description,
-            prerequisites: response.body[0].COURSES[i].prerequisites,
-          };
-          ufcourses.push(newCourse);
-        }
-        init_course_db();
-      })
-      .catch((error) => {
-        console.log(error.response.body);
-      });
-  }
-}
-
-function init_course_db() {
+function init() {
   Course.find({}, (err, courses) => {
     if (err) console.log(err);
     if (courses.length == 0) {
-      for (let i = 0; i < ufcourses.length; i++) {
-        const newCourse = {
-          id: ufcourses[i].id,
-          name: ufcourses[i].name,
-          description: ufcourses[i].description,
-          prerequisites: ufcourses[i].prerequisites,
-        };
-        Course.create(newCourse, (err, course) => {
-          if (err) {
-            console.log(err);
+      got("https://one.ufl.edu/apix/soc/schedule/?term=2211&category=CWSP", {
+        json: true,
+      })
+        .then((response) => {
+          for (let i = 0; i < response.body[0].COURSES.length; i++) {
+            let newCourse = {
+              id: response.body[0].COURSES[i].code,
+              name: response.body[0].COURSES[i].name,
+              description: response.body[0].COURSES[i].description,
+              prerequisites: response.body[0].COURSES[i].prerequisites,
+            };
+            Course.create(newCourse, (err, course) => {
+              if (err) {
+                console.log(err);
+              }
+            });
           }
+        })
+        .catch((error) => {
+          console.log(error.response.body);
         });
-      }
       console.log("Api call completed");
     } else console.log("already initialized");
   });
@@ -72,7 +52,10 @@ function init_course_db() {
 init();
 
 app.get("/", (req, res) => {
-  res.render("home", { courses: ufcourses });
+  Course.find({}, (err, courses) => {
+    if (err) console.log(err);
+    else res.render("home", { courses: courses });
+  });
 });
 
 app.get("/:courseId", (req, res) => {
