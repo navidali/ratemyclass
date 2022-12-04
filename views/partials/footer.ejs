@@ -1,13 +1,29 @@
 	</body>
 	<script>
-	var $rows = $('table tr');
-	$rows.hide();
+	var $table = $('#courselist');
+	$table.hide();
 	$('#searchbar').keyup(function() {
 		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-		$rows.show().filter(function() {
+		$table.show().filter(function() {
 			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
 			return !~text.indexOf(val);
 		}).hide();
+	});
+
+	$('#searchbar').blur(function() {
+		if($(this).val().length == 0)
+			$table.hide();
+	});
+	$(".home").click(function() {
+		document.location.href = "/";
+	});
+	$(".post-review").click(function() {
+		let url = window.location.pathname;
+		document.location.href = url + "/new";
+	});
+	$(".back").click(function() {
+		let url = window.location.pathname.slice(0, window.location.pathname.lastIndexOf('/'));
+		document.location.href = url;
 	});
 	</script>
 </html>

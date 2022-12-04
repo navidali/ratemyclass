@@ -90,9 +90,14 @@ app.post("/:courseId", (req, res) => {
   Review.create(newReview, (err, review) => {
     if (err) {
       console.log(err);
-      res.render("new", { course: course });
+    }
+  });
+
+  Course.find({ name: req.params.courseId }, function (err, course) {
+    if (err) {
+      console.log(err);
     } else {
-      Course.find({ name: req.params.courseId }, function (err, course) {
+      Review.find({ course_name: req.params.courseId }, function (err, review) {
         if (err) {
           console.log(err);
         } else {

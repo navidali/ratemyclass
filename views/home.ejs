@@ -82,13 +82,15 @@
         />
       </form>
     </div>
-    <div>
+    <div">
       <table id="courselist">
-      <% for(var i = 0; i < courses.length; i++) {%>
-        <tr>
-          <td><a href="<%= '/'+courses[i].name %>"><%= courses[i].name %></a></td>
-        </tr>
-        <% }; %>
+        <tbody>
+          <% for(var i = 0; i < courses.length; i++) {%>
+          <tr>
+            <td><a href="<%= '/'+courses[i].name %>"><%= courses[i].name %></a></td>
+          </tr>
+          <% }; %>
+       </tbody>
       </table>
     </div>
   </section>

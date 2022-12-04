@@ -1,60 +1,137 @@
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
-section{
+
+.group {
+  margin-bottom: 15%;
+}
+
+.message {
+  font-size: 60px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+#opening {
+  color: white;   
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+p strong {
+  font-weight: 600;
+}
+
+#searchbar {
+  margin-top: 10%;
+  padding-left: 20px;
+  width: 100px;
+  height: 60px;
+  font-size: 20px;
+  color: black;   
+}
+
+#courselist {
+  background-color: white;
+  width: 100%;
+  border-radius: 15px;
+}
+@media screen and (min-width: 1980px) {
+  section{
     margin: auto;
     width: 20%;
     height: 100%;
     padding: 10px;
     padding-top: 10%;
+  }
+
+  #courselist tbody {
+    display:block; 
+    overflow:auto;
+    height:250px;
+    width:100%;
+    scrollbar-width: none;
+  }
 }
 
-.group {
-    margin-bottom: 15%;
+@media screen and (min-width: 1600px) {
+  section{
+    margin: auto;
+    width: 20%;
+    height: 50%;
+    padding: 10px;
+    padding-top: 10%;
+  }
+
+  #courselist tbody {
+    display:block; 
+    overflow:auto;
+    height:200px;
+    width:100%;
+    scrollbar-width: none;
+  }
 }
 
-.message {
-    font-size: 60px;
-    font-weight: 700;
-    color: white;
-    margin: 0;
+
+#courselist tbody::-webkit-scrollbar{
+  display: none;
 }
 
-#opening {
-    color: white;   
-    font-size: 20px;
-    font-weight: lighter;
+#courselist tbody tr a{
+  font-size: 15px;
+  text-decoration: none;
+  color: black;
 }
 
-p strong {
-    font-weight: 600;
+#courselist tbody tr:hover{
+  font-weight: 600;
 }
 
-#searchbar{
-    margin-top: 10%;
-    padding-left: 20px;
-    width: 100px;
-    height: 60px;
-    font-size: 20px;
-    color: black;
-    
+.p-5 {
+  background-color: #6B7A8F;
+  color: white;
+  margin: 0;
+  height: 40%;
 }
 
 .pt-5 {
   height: 50%;
+  border-color: #dedede;
 }
 
-.control {
-  height: 50%;
+#carousel-container {
+  margin: 0;
+  max-width: 100%;
 }
 
+.col-md-4 {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card{
+  margin: 5%;
+  height: 90%;
+  width: 70%;
+  border-radius: 15px;
+  
+}
 
 .fa-star {
   display: inline-block;
-}
+} 
 
 .yellow {
   color: #FFAA33;
+}
+
+.card-text {
+  position: absolute;
+  padding-bottom: 3%;
+  bottom: 0;
 }
 
 .btn-secondary {
@@ -70,4 +147,37 @@ button a:hover{
   text-decoration: none;
   cursor: pointer;
   color: inherit;
+}
+
+#btn-row {
+  margin: 2%;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  height: 20vh;
+  max-width: 125px;
+  
+}
+
+.carousel-control-prev {
+  left: 2%;
+  margin-top: 32%;
+}
+
+.carousel-control-next {
+  right: 2%;
+  margin-top: 32%;
+}
+
+.segment {
+  padding: 16px * 2 0;
+  text-align: center;
+}
+
+.control {
+  background-color: #6B7A8F;
+  width: 50px;
+  height: 50px;
 }

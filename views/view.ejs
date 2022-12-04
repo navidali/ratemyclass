@@ -1,31 +1,20 @@
 <%- include("partials/header") -%> 
 
 <body>
-  <div class="p-5 mb-4 bg-light rounded-3">
+  <div class="p-5">
     <div class="container-fluid py-5">
       <h1 class="display-5 fw-bold"><%=course.id + ': ' + course.name %></h1>
       <p class="col-md-8 fs-4"><%='Description: '+ course.description %></p>
-      <p class="col-md-8 fs-4"><%='prerequisites: '+ course.prerequisites %></p>
-      <button class="btn btn-primary btn-lg" type="button">Example button</button>
+      <p class="col-md-8 fs-4"><%='Prerequisites: '+ course.prerequisites %></p>
     </div>
   </div> 
 
   <% if (review.length != 0) { %>
     <div class="pt-5 pb-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-6 text-right">
-            <button class="control btn btn-primary carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span>Previous</span>
-            </button>
-            <button class="control btn btn-primary carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span>Next</span>
-            </button>
-          </div>
+      <div id="carousel-container" class="container">
+        <div class="row" style="height: 100%;">
           <div class="col-12">
-            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel" data-bs-interval="false">
               <div class="carousel-inner">
                 <% for (var i = 0; i < review.length; i++) { %>
                   <% if (i == 0) { %>
@@ -61,16 +50,26 @@
           </div>
         </div>
       </div>
+      <% if (review.length > 3) { %>
+      <button class="control btn btn-primary carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button class="control btn btn-primary carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+      <% } %>
     </div>
 </div>
-<div>
-  <button type="button" class="btn btn-secondary btn-lg"><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+<div id="btn-row">
+  <button type="button" class="home btn btn-secondary btn-lg">Home</button>
+  <button type="button" class="post-review btn btn-secondary btn-lg">Add Review</button>
 </div>
   <% } else { %>
-    <div>
+    <div style="text-align: center; padding: 3%;">
       <h1>There aren't any reviews for this class yet!</h1>
       <p>Be the first to make a post!</p>
-      <button type="button" class="btn btn-secondary btn-lg"><a href="<%= '/'+course.name %>/new">Add Review</a></button>
+      <button style="width: 7%;" type="button" class="home btn btn-secondary btn-lg">Home</button>
+      <button style="width: 7%" type="button" class="post-review btn btn-secondary btn-lg">Add Review</button>
     </div>
   <% } %>    
 </body>

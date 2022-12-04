@@ -1,28 +1,36 @@
 <%- include("partials/header") -%> 
 
-<body>
+<body style=" padding: 1em;
+font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+font-size: 15px;
+background-color: #e3e3e3;">
+  <div id="form-container" style="max-width: 38em;
+  padding: 1em 3em 2em 3em;
+  height: 65%;
+  margin: 9em auto;
+  background-color: #fff;
+  border-radius: 4.2px;
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);">
     <div>
-        <h1>Rate and Review</h1>
-        <p style="color: black;"> Class id: <%= course.id %> Course Name: <%= course.name %></p>
+        <h1 class="segment" style="font-size: 60px;
+        font-weight: 600; text-align: center; padding-bottom: 30px;">Leave a Review</h1>
+        <p style="font-size: 20px;"><%= course.id %>: <%= course.name %></p>
     </div>    
-
     <div>
       <form class="ui form" action="<%= '/'+course.name %>" method="POST">
-        <p style="color:black;">How would you rate this class? (between 1 and 5)</p>
+        <p>How would you rate this class? (between 1 and 5)</p>
         <div class="field">
           <input type="number" name="rating" min="1" max="5" required>
         </div>
-        <p style="color:black"> Why did you give this rating?</p>
+        <p> Why did you give this rating?</p>
         <div class="field">
-          <input type="text" name="description" required>
+          <textarea name="description" cols="30" rows="5" required style="resize: none;"></textarea>
         </div>
-        <a href="<%= '/'+course.name %>" class="ui button">Back</a>
-        <button class="ui button" type="submit">Submit</button>
+        <button class="back ui button">Back</button>
+        <button class="submit ui button" type="submit">Submit</button>
       </form>
     </div>
-
-
-
+  </div>
 </body>
 
 <%- include("partials/footer") -%> 
