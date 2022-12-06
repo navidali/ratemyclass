@@ -8,7 +8,6 @@ passport.use(
     User.findOne({ email: email })
       .then((user) => {
         if (!user) {
-          console.log("User cannot be found");
           return done(null, false, { message: "User cannot be found" });
         } else {
           bcrypt.compare(password, user.password, (err, isMatch) => {

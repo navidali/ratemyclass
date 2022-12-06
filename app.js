@@ -82,35 +82,45 @@ app.post(
 );
 
 app.get("/register", (req, res) => {
-  res.render("register.ejs");
+  res.render("register");
 });
 
-app.post("/register", async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    User.findOne({ email: req.body.email }, (err, user) => {
-      if (err) throw err;
-      else if (user) {
-        res.render("register", { message: "Email already in use" });
-      } else {
-        User.create(
-          {
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword,
-          },
-          (err, user) => {
-            if (err) console.log(err);
-          }
-        );
-        res.render("login");
-      }
-    });
-  } catch {
-    res.render("register");
+app.post(
+  "/register",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/register",
+    failureFlash: true,
+  }),
+  async (req, res) => {
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      User.findOne({ email: req.body.email }, (err, user) => {
+        if (err) throw err;
+        else if (user) {
+          res.render("register", {
+            message: req.flash("Email already in use"),
+          });
+        } else {
+          User.create(
+            {
+              id: Date.now().toString(),
+              name: req.body.name,
+              email: req.body.email,
+              password: hashedPassword,
+            },
+            (err, user) => {
+              if (err) console.log(err);
+            }
+          );
+          res.render("login");
+        }
+      });
+    } catch {
+      res.render("register");
+    }
   }
-});
+);
 
 app.get("/", (req, res) => {
   Course.find({}, (err, courses) => {
@@ -119,7 +129,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/:courseId", (req, res) => {
+app.get("/courses/:courseId", (req, res) => {
   console.log(req.params.courseId);
   Course.find({ name: req.params.courseId }, function (err, course) {
     if (err) {
@@ -137,7 +147,7 @@ app.get("/:courseId", (req, res) => {
   });
 });
 
-app.post("/:courseId", (req, res) => {
+app.post("/courses/:courseId", (req, res) => {
   const course_name = req.params.courseId,
     rating = req.body.rating,
     description = req.body.description;
@@ -169,7 +179,7 @@ app.post("/:courseId", (req, res) => {
   });
 });
 
-app.get("/:courseId/new", (req, res) => {
+app.get("/courses/:courseId/new", (req, res) => {
   Course.find({ name: req.params.courseId }, function (err, course) {
     if (err) {
       console.log(err);
