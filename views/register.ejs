@@ -2,8 +2,8 @@
 
 <body>
     <h1>Register</h1>
-    <% if (messages.error) { %>
-    <h2><%= messages.error %></h2>
+    <% if (message.length > 0) { %>
+    <h2><%= message %></h2>
     <% } %>
     <form action="/register" method="POST">
         <div>

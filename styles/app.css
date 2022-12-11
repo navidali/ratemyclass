@@ -181,3 +181,13 @@ button a:hover{
   width: 50px;
   height: 50px;
 }
+
+.v-bar {
+  border-left: 6px solid  #6B7A8F;
+  width: 5%;
+  margin-left: 5%;
+}
+
+.hidden {
+  display: none;
+}

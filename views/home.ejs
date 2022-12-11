@@ -32,15 +32,18 @@
         style="padding-right: 15%"
       >
         <div class="navbar-nav" style="font-size: 25px">
+          <% if (!user) { %>
           <a
             class="nav-link active"
             aria-current="page"
-            href="#"
+            href="/login"
             style="color: rgb(81, 129, 231)"
-            >Home</a
+            >Login</a
           >
-          <a class="nav-link" href="#">About</a>
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" href="/register">Sign Up</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Logout</a>
+          <% } %>
         </div>
       </div>
     </div>

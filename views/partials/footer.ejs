@@ -1,19 +1,36 @@
 	</body>
 	<script>
-	var $table = $('#courselist');
-	$table.hide();
-	$('#searchbar').keyup(function() {
-		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-		$table.show().filter(function() {
-			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-			return !~text.indexOf(val);
-		}).hide();
+	$("#courselist").hide();
+	$('#searchbar').keyup(function(){
+		$("#courselist").show();
+		var valThis = $(this).val().toLowerCase();
+		var noresult = 0;
+		if(valThis == ""){
+			$('#courselist > tbody > tr > td').show();
+			noresult = 1;
+			$('.no-results-found').remove();
+    	} else {
+			$('#courselist > tbody > tr > td').each(function(){
+				var text = $(this).text().toLowerCase();
+				var match = text.indexOf(valThis);
+				if (match >= 0) {
+					$(this).show();
+					noresult = 1;
+					$('.no-results-found').remove();
+				} else {
+					$(this).hide();
+				}
+        	});
+   			};
+		if (noresult == 0) {
+			$("#courselist > tbody").append('<tr><td class="no-results-found">No results found.</td></tr>');
+		}
+	});         
+	
+	$("#searchbar").click(function(){
+		$("#courselist").show();
 	});
 
-	$('#searchbar').blur(function() {
-		if($(this).val().length == 0)
-			$table.hide();
-	});
 	$(".home").click(function() {
 		document.location.href = "/";
 	});

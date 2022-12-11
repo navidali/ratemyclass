@@ -7,7 +7,7 @@ const methodOverride = require("method-override"),
   express = require("express"),
   session = require("express-session"),
   flash = require("express-flash"),
-  bcrypt = require("bcrypt"),
+  cookieParser = require("cookie-parser"),
   got = require("got"),
   app = express();
 
@@ -21,6 +21,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,64 +69,36 @@ function init() {
 
 init();
 
-app.get("/login", (req, res) => {
-  res.render("login.ejs");
+app.get("/login", checkNotAuthenticated, (req, res) => {
+  res.render("login.ejs", { message: req.flash("Message") });
 });
 
 app.post(
   "/login",
-  passport.authenticate("local", {
+  passport.authenticate("local-login", {
     successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true,
   })
 );
 
-app.get("/register", (req, res) => {
-  res.render("register");
+app.get("/register", checkNotAuthenticated, (req, res) => {
+  res.render("login.ejs", { message: req.flash("Message") });
 });
 
 app.post(
   "/register",
-  passport.authenticate("local", {
+  passport.authenticate("local-signup", {
     successRedirect: "/",
-    failureRedirect: "/register",
+    failureRedirect: "/login",
     failureFlash: true,
-  }),
-  async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      User.findOne({ email: req.body.email }, (err, user) => {
-        if (err) throw err;
-        else if (user) {
-          res.render("register", {
-            message: req.flash("Email already in use"),
-          });
-        } else {
-          User.create(
-            {
-              id: Date.now().toString(),
-              name: req.body.name,
-              email: req.body.email,
-              password: hashedPassword,
-            },
-            (err, user) => {
-              if (err) console.log(err);
-            }
-          );
-          res.render("login");
-        }
-      });
-    } catch {
-      res.render("register");
-    }
-  }
+  })
 );
 
 app.get("/", (req, res) => {
   Course.find({}, (err, courses) => {
     if (err) console.log(err);
-    else res.render("home", { courses: courses });
+    else res.render("home", { courses: courses, user: req.user });
   });
 });
 
@@ -179,7 +152,7 @@ app.post("/courses/:courseId", (req, res) => {
   });
 });
 
-app.get("/courses/:courseId/new", (req, res) => {
+app.get("/courses/:courseId/new", isLoggedIn, (req, res) => {
   Course.find({ name: req.params.courseId }, function (err, course) {
     if (err) {
       console.log(err);
@@ -189,14 +162,21 @@ app.get("/courses/:courseId/new", (req, res) => {
   });
 });
 
+app.get("/logout", (req, res) => {
+  req.logout(req.user, (err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
+
 app.get("*", (req, res) => {
   res.redirect("/");
 });
 
-app.delete("/logout", (req, res) => {
-  req.logOut();
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) return next();
   res.redirect("/login");
-});
+}
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
