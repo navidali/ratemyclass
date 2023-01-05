@@ -1,51 +1,56 @@
 <%- include("partials/header") -%> 
 
 <body style="background-color: #cccccc;">
-    <div class="container register-form" style="box-shadow:
-    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-    0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12);
-    background-color: white;
-    border-radius: 5px; height: 40%; position: relative; top: 40%; transform: translateY(-50%);">
     <% if (message.length > 0) { %>
-    <h2><%= message %></h2>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h2 style="font-size: 16px;"><%= message %></h2>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+   
     <% } %>
-        <div class="row-9 justify-content-center" style="display: inline-flex; width: 100%;">
-            <div class="col-4">
-                <h1>Sign In</h1>
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form">
                 <form action="/login" method="POST">
-                    <div>
-                        <label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email" required>
+                    <div class="sign-in-htm">
+                    <div class="group">
+                        <label for="email" class="label">Email</label>
+                        <input id="email" type="email" class="input" name="email" required>
                     </div>
-                    <div>
-                        <label class="form-label" for="password">Password</label>
-                        <input class="form-control" type="password" id="password" name="password" required>
+                    <div class="group">
+                        <label for="password" class="label">Password</label>
+                        <input id="password" type="password" class="input" name="password" data-type="password" required>
                     </div>
-                <button class="btn btn-secondary" type="submit">Login</button>
+                    <div class="group">
+                        <button class="button" type="submit">Sign In</button>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="group">
+                        <button id="guest" type="submit" class="button">Continue as Guest</button>
+                    </div>
+                </div>
                 </form>
-            </div>
-            <div class="col-1 v-bar"></div>
-            <div class="col-4">
-                <h1>Sign Up</h1>
                 <form action="/register" method="POST">
-                    <div>
-                        <label class="form-label" for="name">Name</label>
-                        <input class="form-control" type="text" id="name" name="name" require>
+                <div class="sign-up-htm">
+                    <div class="group">
+                        <label for="name" class="label">Full Name</label>
+                        <input id="name" type="text" name="name" class="input" required>
                     </div>
-                    <div>
-                        <label class="form-label" for="email">Email</label>
-                        <input class="form-control" type="email" id="email" name="email" required>
+                    <div class="group">
+                        <label for="email" class="label">Email Address</label>
+                        <input id="email" type="email" class="input" name="email" required>
                     </div>
-                    <div>
-                        <label class="form-label" for="password">Password</label>
-                        <input class="form-control" type="password" id="passowrd" name="password" required>
+                    <div class="group">
+                        <label for="password" class="label">Password</label>
+                        <input id="password" type="password" class="input" name="password" data-type="password" required>
                     </div>
-            
-                    <button class="btn btn-secondary" type="submit">Create Account</button>
+                    <div class="hr"></div>
+                    <div class="group">
+                        <button type="submit" class="button">Sign Up</button>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>

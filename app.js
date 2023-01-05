@@ -31,9 +31,13 @@ app.use(methodOverride("_method"));
 app.use(express.static("assets"));
 app.use(express.static("styles"));
 mongoose
-  .connect("mongodb://localhost:27017/classes", {
-    useNewUrlParser: true,
-  })
+  .connect(
+    "mongodb+srv://navidali:navid786@cluster0.t0q1wep.mongodb.net/test",
+    {
+      //.connect("mongodb://localhost:27017/classes", {
+      useNewUrlParser: true,
+    }
+  )
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
@@ -136,20 +140,7 @@ app.post("/courses/:courseId", (req, res) => {
       console.log(err);
     }
   });
-
-  Course.find({ name: req.params.courseId }, function (err, course) {
-    if (err) {
-      console.log(err);
-    } else {
-      Review.find({ course_name: req.params.courseId }, function (err, review) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render("view", { course: course[0], review: review });
-        }
-      });
-    }
-  });
+  res.redirect("/courses/" + req.params.courseId);
 });
 
 app.get("/courses/:courseId/new", isLoggedIn, (req, res) => {

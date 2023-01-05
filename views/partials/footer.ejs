@@ -34,6 +34,9 @@
 	$(".home").click(function() {
 		document.location.href = "/";
 	});
+	$("#guest").click(function() {
+		document.location.href = "/";
+	});
 	$(".post-review").click(function() {
 		let url = window.location.pathname;
 		document.location.href = url + "/new";
@@ -42,5 +45,14 @@
 		let url = window.location.pathname.slice(0, window.location.pathname.lastIndexOf('/'));
 		document.location.href = url;
 	});
+	function countChars(obj){
+		var maxLength = 140;
+		var strLength = obj.value.length;
+		var charRemain = (maxLength - strLength);
+		
+		if(charRemain >= 0){
+			document.getElementById("CharNum").innerHTML = charRemain+' characters remaining';
+		}
+	}
 	</script>
 </html>

@@ -18,7 +18,10 @@ passport.use(
             return done(
               null,
               false,
-              req.flash("Message", "That email is already taken.")
+              req.flash(
+                "Message",
+                "An account with that email has already been made."
+              )
             );
           } else {
             var newUser = new User();
@@ -48,12 +51,22 @@ passport.use(
       User.findOne({ "local.email": email }, (err, user) => {
         if (err) return done(err);
         if (!user)
-          return done(null, false, req.flash("Message", "No user found."));
+          return done(
+            null,
+            false,
+            req.flash(
+              "Message",
+              "No account with that email has been registered yet."
+            )
+          );
         if (!user.validPassword(password))
           return done(
             null,
             false,
-            req.flash("Message", "Oops! Wrong password.")
+            req.flash(
+              "Message",
+              "You have entered an invalid username or password."
+            )
           );
         return done(null, user);
       });
