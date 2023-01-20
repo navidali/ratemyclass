@@ -1,5 +1,5 @@
 # RateMyClass
-Web application that provides student reviews for the courses being offered at UF. Built with Node.js, Express, Bootstrap, and Mongodb.
+Web application that provides student reviews for the courses being offered at UF. Upon viewing, the selected course will dsiplay a short description with its prerequisites and a carousel of user-made reviews. From there the user can opt to make a review if they are logged in and if not then they will be redirected to the sign / log in page. Built with Node, Express, Bootstrap, and Mongodb.
 
 ## Features
 - User Authentication and Authorization
